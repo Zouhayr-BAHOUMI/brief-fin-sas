@@ -1,9 +1,9 @@
-#include <stdio.h>
 #include<stdio.h>
 #include<math.h>
 #include<stdlib.h>
+#include <string.h>
 
-enum priorite{ low ,medium, high };
+//enum priorite{ low ,medium, high };
 
 
 typedef struct {
@@ -20,36 +20,67 @@ typedef struct{
     char nom[30];
     char description[30];
     dateEcheance date;
-    enum priorite pr;
+    int priorite;
 
 }tache;
 
 
-    void saisiInfos(tache t[], int taille){
-        printf("entrer les information de chaque tache :");
+    void saisiInfos(tache * newTache ){
+        printf("Entrer les information de la tache : \n");
 
-        int i;
-        for(i=0;i<taille; i++){
+            printf("entrer le nom de la tache : ");
+            scanf(" %[^\n]s",newTache->nom);
+            printf("entrer la description de la tache : ");
+            scanf(" %[^\n]s", newTache->description);
+            printf("entrer la date decheance de la tache : \n ");
+            printf("Annee :  ");
+            scanf(" %d",&newTache->date.annee);
+            printf("mois   : ");
+            scanf(" %d",&newTache->date.mois);
+            printf("jour   : ");
+            scanf(" %d",&newTache->date.jour);
+            printf("entrer la priorite de la tache :\n ");
+            printf("1.low\t 2. medium\t 3. high\t :");
+            scanf(" %d", &newTache->priorite);
 
-            printf("entrer le nom de  %d tache : ",i+1);
-            scanf(" %[^\n]s",&t[i].nom);
-            printf("entrer la date decheance de %d tache : ",i+1);
-            printf("Annee :  ",i+1);
-            scanf(" %d",&t[i].date.annee);
-            printf("mois   : ",i+1);
-            scanf(" %d",&t[i].date.mois);
-            printf("jour   : ",i+1);
-            scanf(" %d",&t[i].date.jour);
         }
 
+    int ajouterTache(tache t[],int nb, tache newTache){
+
+       if(nb < 100){
+            t[nb]= newTache;
+            nb++;
+            printf("ajouter avec success . \n");
+       }else{
+
+            printf("somthing wrong .");
+       }
+
+       return nb;
     }
 
-    int ajouterTache()
+        void afficherTache (tache t[],int nb){
+        int i;
+        for(i=0;i<nb ; i++){
+            printf("\n Tache N %d", i+1);
+            printf("\n Nom est : %s", t[i].nom);
+            printf("\n description est : %s", t[i].description);
+            printf("\n prioritie est : %d", t[i].priorite);
+            printf("\n Date d'echeance est : %d/%d/%d", t[i].date.jour, t[i].date.mois, t[i].date.annee);
+            printf("\n ---------------------------------------------------------------------- \n");
+        }
+        }
 
-    int main () {
 
+
+
+int main () {
+
+        tache t[100];
         int choice;
         int ordre;
+        int nbrTache=0;
+        tache newTache;
 
     while(1){
 
@@ -66,26 +97,34 @@ typedef struct{
 
     switch(choice){
     case 1:
-                ajouterTache();
+                saisiInfos(&newTache);
+                nbrTache = ajouterTache(t,nbrTache,newTache);
                 break;
     case 2:
-                afficher();
+                afficherTache(t,nbrTache);
                 break;
     case 3:
-                modifier();
+                //modifierTache(t,nbrTache);
                 break;
     case 4:
-                supprimer();
+                //nbrTache = supprimerTache(t,&nbrTache);
                 break;
     case 5:
             printf("Veuillez choisir l'ordre de tri : \n");
             printf("1. Croissant\n");
             printf("2. Decroissant\n");
             scanf("%d", &ordre);
-            trier();
+            if (ordre == 1){
+               // trierTacheCroissant(t,nbrTache);
+            }else if(ordre == 2){
+               // trierTacheDecroissant(t,nbrTache);
+            }else
+                printf("invalid choix");
+
+
             break;
     case 6:
-                filtrer();
+               // filtrer();
                 break;
     case 7:
                 exit(0);
