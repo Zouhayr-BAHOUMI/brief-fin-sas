@@ -3,8 +3,6 @@
 #include<stdlib.h>
 #include <string.h>
 
-//enum priorite{ low ,medium, high };
-
 
 typedef struct {
 
@@ -177,8 +175,31 @@ void trierTacheDecroissant(tache t[], int nb){
        }
 }
 
+void FiltrerParPriorite(tache t[], int nb){
 
+    char prioriteRechercher[30];
+    int existe=0;
 
+    printf(" entrer la priorite des tache a afficher :");
+    scanf(" %[^\n]s",prioriteRechercher);
+
+    for(int i=0; i<nb; i++){
+        if(strcmp(t[i].priorite, prioriteRechercher) == 0){
+
+            printf("\n Tache N %d", i+1);
+            printf("\n Nom est : %s", t[i].nom);
+            printf("\n description est : %s", t[i].description);
+            printf("\n prioritie est : %s", t[i].priorite);
+            printf("\n Date d'echeance est : %d/%d/%d", t[i].date.jour, t[i].date.mois, t[i].date.annee);
+            printf("\n ---------------------------------------------------------------------- \n");
+            existe=1;
+    }
+
+    }
+    if (existe != 1) {
+                printf("n'est pas trouver :");
+        }
+}
 
 int main () {
 
@@ -228,13 +249,13 @@ int main () {
                 printf("invalid choix");
             break;
     case 6:
-               // filtrer();
-                break;
+           FiltrerParPriorite(t,nbrTache);
+           break;
     case 7:
-                exit(0);
+            exit(0);
     default:
-                printf("invalide choix ");
-                break;
+            printf("invalide choix ");
+            break;
     }//end switch
 
     }//end while
